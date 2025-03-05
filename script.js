@@ -1,24 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Círculo cromático aprimorado
-    const circuloSVG = `
-        <svg viewBox="0 0 200 200">
-            <defs>
-                ${createGradients()}
-            </defs>
-            
-            <circle cx="100" cy="100" r="80" fill="none" stroke="#ddd" stroke-width="2"/>
-            ${createColorWheel()}
-            
-            <!-- Marcadores de cor -->
-            <circle cx="100" cy="20" r="4" fill="#FF0000"/>
-            <circle cx="169.3" cy="130" r="4" fill="#00FF00"/>
-            <circle cx="30.7" cy="130" r="4" fill="#0000FF"/>
-        </svg>
-    `;
-
-    document.querySelector('.circle-container').innerHTML = circuloSVG;
-
-    // Adicionar interatividade
+// Adicionar interatividade
     const cores = document.querySelectorAll('.cor');
     cores.forEach(cor => {
         cor.addEventListener('click', () => {
@@ -48,23 +28,6 @@ function createGradients() {
     `).join('');
 }
 
-function createColorWheel() {
-    let paths = '';
-    for (let i = 0; i < 7; i++) {
-        const startAngle = i * 51.43;
-        const endAngle = (i + 1) * 51.43;
-        paths += `
-            <path d="
-                M 100 100
-                L ${100 + 80 * Math.cos(startAngle * Math.PI / 180)} ${100 + 80 * Math.sin(startAngle * Math.PI / 180)}
-                A 80 80 0 0 1 ${100 + 80 * Math.cos(endAngle * Math.PI / 180)} ${100 + 80 * Math.sin(endAngle * Math.PI / 180)}
-                Z
-            " fill="url(#grad${i})" />
-        `;
-    }
-    return paths;
-}
-
 function showColorInfo(color) {
     // Criar elemento de informação
     const info = document.createElement('div');
@@ -90,7 +53,7 @@ function showColorInfo(color) {
     }
     
     container.innerHTML = '';
-    container.appendChild(info);
+    container.appendChild(info)
 }
 
 function getColorName(color) {
@@ -120,47 +83,20 @@ function getColorUsageSuggestion(colorName) {
     return suggestions[colorName] || 'Pode ser usado de acordo com o contexto do design';
 }
 
-async function loadHarmonyImages() {
-    try {
-        const harmonies = [
-            {
-                name: "Monocromática",
-                prompt: "Professional color palette showing monochromatic blue colors, minimalist flat design"
-            },
-            {
-                name: "Análoga",
-                prompt: "Professional color palette showing analogous colors - blue, blue-green, and green, minimalist flat design"
-            },
-            {
-                name: "Complementar",
-                prompt: "Professional color palette showing complementary colors - blue and orange, minimalist flat design"
-            },
-            {
-                name: "Triádica",
-                prompt: "Professional color palette showing triadic colors - blue, red, and yellow, minimalist flat design"
-            },
-            {
-                name: "Complementar Dividida",
-                prompt: "Professional color palette showing split complementary colors - blue with yellow-orange and red-orange, minimalist flat design"
-            },
-            {
-                name: "Quadrupla",
-                prompt: "Professional color palette showing tetradic colors - blue, green, orange, and red, minimalist flat design"
-            }
-        ];
+function loadHarmonyImages() {
+    const harmonies = {
+        'monocromatica': 'monocromatica.jpg',
+        'analoga': 'Análoga.jpg',
+        'complementar': 'Complementar.jpg',
+        'triadica': 'Triade.jpg',
+        'complementar-dividida': 'dividida-complementar.jpg',
+        'quadrupla': 'quadrado.jpg'
+    };
 
-        for (const harmony of harmonies) {
-            const result = await websim.imageGen({
-                prompt: harmony.prompt,
-                aspect_ratio: "16:9",
-            });
-            
-            const imgContainer = document.querySelector(`.harmonia-${harmony.name.toLowerCase()} .harmony-image`);
-            if (imgContainer) {
-                imgContainer.style.backgroundImage = `url(${result.url})`;
-            }
+    for (const [harmonyClass, imagePath] of Object.entries(harmonies)) {
+        const imgContainer = document.querySelector(`.harmonia-${harmonyClass} .harmony-image`);
+        if (imgContainer) {
+            imgContainer.style.backgroundImage = `url(${imagePath})`;
         }
-    } catch (error) {
-        console.error('Error loading harmony images:', error);
     }
 }

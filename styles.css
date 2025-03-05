@@ -62,10 +62,15 @@ h2 {
 }
 
 .circle-container {
-    width: 400px;
-    height: 400px;
+    width: 250px;
+    height: 250px;
     margin: var(--spacing-md) auto;
     position: relative;
+    background-image: url('monocromatica.jpg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 8px;
 }
 
 .harmonia {
@@ -103,21 +108,16 @@ h2 {
     flex-direction: column;
     justify-content: space-between;
 }
-.harmony-image-circle {
-    width: auto;
-    height: 300px; /* Altera de 200px para auto */
-    background-size: cover;
-    background-position: center;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
+
 .harmony-image {
     width: auto;
-    height: 100%; /* Altera de 200px para auto */
-    background-size: cover;
+    height: 100%;
+    background-size: contain;
     background-position: center;
+    background-repeat: no-repeat;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: #f5f5f5;
 }
 
 .exemplo-cores {
